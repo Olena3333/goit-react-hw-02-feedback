@@ -1,8 +1,8 @@
 import React from 'react';
-import { StyledWrapper, StyledBtn } from './App.styled';
+import { StyledWrapper } from './App.styled';
 import { Statistics } from '../components/Statistics/Statistics';
 import { Section } from './Section/Section';
-// import { FeedbackOptions } from './FeedbackOptions/FeedbackOptions';
+import { FeedbackOptions } from './FeedbackOptions/FeedbackOptions';
 import { Notification } from './Notification/Notification';
 export class App extends React.Component {
   state = {
@@ -10,6 +10,7 @@ export class App extends React.Component {
     neutral: 0,
     bad: 0,
   };
+  // ['good', 'neutral', 'bad']
 
   feedbackIncrement = name => {
     // console.log(name);
@@ -30,54 +31,27 @@ export class App extends React.Component {
   };
 
   render() {
+    const total = this.countTotalFeedback();
     return (
       <StyledWrapper>
-        <Section title="Please leave feedback"></Section>
-        <StyledBtn>
-          <button onClick={() => this.feedbackIncrement('good')}>Good</button>
-          <button onClick={() => this.feedbackIncrement('neutral')}>
-            Neutral
-          </button>
-          <button onClick={() => this.feedbackIncrement('bad')}>Bad</button>
-        </StyledBtn>
-
-        {/* <FeedbackOptions
-            options={this.state}
-            onLeaveFeedback={this.feedbackIncrement()}
-          /> */}
-        {this.state.good > 0 || this.state.neutral > 0 || this.state.bad ? (
+        <Section title="Please leave feedback">
+          <FeedbackOptions
+            options={Object.keys(this.state)} // ['good', 'neutral', 'bad']
+            onLeaveFeedback={this.feedbackIncrement}
+          />
+        </Section>
+        {total ? (
           <Statistics
             good={this.state.good}
             neutral={this.state.neutral}
             bad={this.state.bad}
-            total={this.countTotalFeedback()}
+            total={total}
             positivePercentage={this.countPositiveFeedbackPercentage()}
           />
         ) : (
-          <Notification message="There is no feedback"></Notification>
+          <Notification message="There is no feedback" />
         )}
       </StyledWrapper>
     );
   }
 }
-
-//  return (
-//    <StyledWrapper>
-//      <h1>Please leave feedback</h1>
-//      <div>
-//        <StyledBtn onClick={() => this.feedbackIncrement('good')}>
-//          Good
-//        </StyledBtn>
-//        <StyledBtn onClick={() => this.feedbackIncrement('neutral')}>
-//          Neutral
-//        </StyledBtn>
-//        <StyledBtn onClick={() => this.feedbackIncrement('bad')}>Bad</StyledBtn>
-//      </div>
-//      <h2>Statistic</h2>
-//      <p>Good: {this.state.good}</p>
-//      <p>Neutral: {this.state.neutral}</p>
-//      <p>Bad: {this.state.bad}</p>
-//      <p>Total: {this.countTotalFeedback()}</p>
-//      <p>Positive feedback: {this.countPositiveFeedbackPercentage()}%</p>
-//    </StyledWrapper>
-//  );

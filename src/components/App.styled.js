@@ -14,14 +14,18 @@ export const StyledWrapper = styled.div`
   max-width: 800px;
   padding: 20px;
 `;
-export const StyledBtn = styled.button`
-  background-color: wheat;
+
+export const StyledBtnList = styled.ul`
+  display: flex;
+  gap: 20px;
+  list-style: none;
   & button {
     margin: 10px;
     padding: 10px;
-    background-color: #b7afaf;
+    background-color: #cfcfcf;
   }
   & button:hover {
-    background-color: blue;
+    background-color: #091ec2;
+    color: white;
   }
 `;
